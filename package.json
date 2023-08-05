@@ -1,0 +1,29 @@
+{
+    "private": true,
+    "name": "kompromiti",
+    "type": "commonjs",
+    "version": "1.0.0",
+    "description": "A tool to improve commit creation and management in software development projects.",
+    "packageManager": "pnpm@8.6.11",
+    "workspaces": [
+        "packages/*"
+    ],
+    "keywords": [
+        "kompromiti",
+        "commit",
+        "commit message",
+        "version control",
+        "code quality",
+        "software development"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/timbo-dev/kompromiti.git"
+    },
+    "author": {
+        "email": "dev@nathanrocha.com.br",
+        "url": "https://github.com/timbo-dev",
+        "name": "Nathan Rocha"
+    },
+    "license": "MIT"
+}
