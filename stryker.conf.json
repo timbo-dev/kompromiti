@@ -13,5 +13,10 @@
     "coverageAnalysis": "perTest",
     "plugins": [
         "@stryker-mutator/vitest-runner"
+    ],
+    "mutate": [
+        "packages/**/*.ts",
+        "!packages/**/*.spec.ts",
+        "!packages/**/*.module.ts"
     ]
 }
