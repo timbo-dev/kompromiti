@@ -9,7 +9,8 @@
         "packages/*"
     ],
     "scripts": {
-        "build": "tsc --noEmit && make build"
+        "build": "tsc --noEmit && make build",
+        "prepare": "scripts/commit/init.sh"
     },
     "keywords": [
         "kompromiti",
