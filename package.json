@@ -30,9 +30,6 @@
         "name": "Nathan Rocha"
     },
     "license": "MIT",
-    "dependencies": {
-        "typescript": "^5.1.6"
-    },
     "devDependencies": {
         "@stryker-mutator/core": "^7.1.1",
         "@stryker-mutator/vitest-runner": "^7.1.1",
@@ -43,6 +40,7 @@
         "@typescript-eslint/parser": "^6.2.1",
         "eslint": "^8.46.0",
         "glob": "^10.3.3",
+        "typescript": "^5.1.6",
         "vitest": "^0.34.1"
     }
 }
