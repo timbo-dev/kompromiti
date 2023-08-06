@@ -40,6 +40,8 @@
         "@typescript-eslint/parser": "^6.2.1",
         "eslint": "^8.46.0",
         "glob": "^10.3.3",
+        "ts-node": "^10.9.1",
+        "tsconfig-paths": "^4.2.0",
         "typescript": "^5.1.6",
         "vitest": "^0.34.1"
     }
