@@ -1,3 +1,6 @@
 node_modules
 **/lib
 Makefile.mjs
+
+# stryker temp files
+.stryker-tmp
