@@ -8,15 +8,25 @@
         "progress",
         "dashboard"
     ],
+    "ignoreStatic": true,
     "testRunner": "vitest",
     "testRunner_comment": "Take a look at (missing 'homepage' URL in package.json) for information about the vitest plugin.",
     "coverageAnalysis": "perTest",
     "plugins": [
         "@stryker-mutator/vitest-runner"
     ],
+    "clearTextReporter": {
+        "allowColor": true,
+        "allowEmojis": true,
+        "logTests": true
+    },
     "mutate": [
         "packages/**/*.ts",
+        "!packages/**/*.exception.ts",
+        "!packages/**/shared/**/*.ts",
         "!packages/**/*.spec.ts",
-        "!packages/**/*.module.ts"
+        "!packages/**/*.test.ts",
+        "!packages/**/*.module.ts",
+        "!packages/**/index.ts"
     ]
 }
