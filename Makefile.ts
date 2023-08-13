@@ -1,6 +1,6 @@
 import swc from '@swc/core';
-import { glob } from 'glob';
 import fs, { mkdirSync, writeFileSync } from 'fs';
+import { glob } from 'glob';
 import { dirname } from 'path';
 import { exit } from 'process';
 
