@@ -13,7 +13,9 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "timbo-linter",
+        "import-helpers"
     ],
     "rules": {
         "indent": [
@@ -32,7 +34,51 @@
             "error",
             "always"
         ],
-        "no-unused-vars": "warn",
-        "@typescript-eslint/no-unused-vars": "warn"
+        "import-helpers/order-imports": [
+            "warn",
+            {
+                "newlinesBetween": "always",
+                "groups": [
+                    "module",
+
+                    "/@domain.+.entity/",
+                    "/@domain.+.exception/",
+                    "/@domain.+.types/",
+                    "/^@domain/",
+
+                    "/@value-objects.+.entity/",
+                    "/@value-objects.+.exception/",
+                    "/@value-objects.+.types/",
+                    "/^@value-object/",
+
+                    "/^@shared/",
+                    "/exception/",
+                    ["parent", "sibling", "index"]
+                ],
+                "alphabetize": {
+                    "order": "asc",
+                    "ignoreCase": true
+                }
+            }
+        ],
+        "comma-dangle": ["error", {
+            "arrays": "never",
+            "objects": "never",
+            "imports": "never",
+            "exports": "never",
+            "functions": "never"
+        }],
+        "no-unused-vars": ["warn", {
+            "vars": "local",
+            "args": "none"
+        }],
+        "@typescript-eslint/no-unused-vars": "warn",
+        "timbo-linter/class": ["error"],
+        "timbo-linter/expressions": [2,
+            {
+                "breakExpressions": ["it"]
+            }
+        ],
+        "@typescript-eslint/no-explicit-any": "off"
     }
 }
