@@ -1,0 +1,34 @@
+{
+    "name": "@kompromiti/interkapto",
+    "version": "1.0.0",
+    "description": "intercept commits and run commands before committing",
+    "main": "lib/index.js",
+    "bin": "bin/interkapto",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "git",
+        "commit",
+        "pre-commit",
+        "hooks",
+        "intercept"
+    ],
+    "repository": {
+        "type": "git",
+        "directory": "packages/interkapto",
+        "url": "https://github.com/timbo-dev/kompromiti.git"
+    },
+    "author": {
+        "email": "dev@nathanrocha.com.br",
+        "name": "Nathan Rocha",
+        "url": "https://github.com/timbo-dev"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=16"
+    },
+    "devDependencies": {
+        "@kompromiti/interkapto": "workspace:*"
+    }
+}
