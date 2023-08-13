@@ -1,12 +1,19 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vitest/config'
+import tsConfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+    plugins: [tsConfigPaths({
+        projects: [
+            'packages/interkapto'
+        ]
+    })],
     test: {
         globals: true,
         include: [
-            '**/*.spec.ts'
+            '**/*.spec.ts',
+            '**/*.test.ts'
         ]
     }
-})
+});
