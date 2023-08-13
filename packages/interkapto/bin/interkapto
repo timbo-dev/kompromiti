@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const isDevelopment = require('fs').existsSync(__dirname + '/../src');
+
+if (isDevelopment) {
+    process.env.NODE_ENV = 'development';
+
+    const tsConfigPath = `${__dirname}/../tsconfig.json`;
+
+    require('ts-node').register({
+        project: tsConfigPath,
+        require: ['tsconfig-paths/register']
+    });
+
+    require(`${__dirname}/../src/index`);
+} else {
+    process.env.NODE_ENV = 'production';
+    require(`${__dirname}/../lib/index`);
+}
