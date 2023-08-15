@@ -25,9 +25,20 @@ feature() {
 
     start() {
         local target=$1
+        local refs=$2
+
+        if [ -z "$refs" ]; then
+            refs="develop"
+        fi
 
         if ! git show-ref --verify --quiet "refs/heads/feature/$target"; then
-            git checkout -b feature/$target develop
+
+            if ! git show-ref --verify --quiet "refs/heads/$refs"; then
+                echo "error: the provided reference branch does not exist"
+                exit 1
+            fi
+
+            git checkout -b feature/$target $refs
         else
             echo "error: the provided feature branch already exist"
             exit 1
