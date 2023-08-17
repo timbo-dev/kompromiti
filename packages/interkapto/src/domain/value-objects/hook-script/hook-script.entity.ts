@@ -1,5 +1,6 @@
 import cp from 'child_process';
-import { IExecuteSyncError } from 'hook/interfaces/hook.types';
+
+import { IExecuteSyncError } from '@domain/hook/interfaces/hook.types';
 
 import { Either } from '@shared/either/either.type';
 import err from '@shared/either/err';
