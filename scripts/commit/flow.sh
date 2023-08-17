@@ -44,6 +44,7 @@ feature() {
             exit 1
         fi
     }
+
     case "$command" in
         start|s)
             shift
@@ -56,6 +57,7 @@ feature() {
             start $@
             break
         ;;
+
         finish|f)
             shift
 
@@ -65,7 +67,6 @@ feature() {
             fi
 
             finish $@
-
             break
         ;;
 
@@ -74,6 +75,7 @@ feature() {
                 echo "error: the flow feature command does not been provided."
                 exit 1
             fi
+
             echo "Command '$command' not found"
             exit 1
         ;;
@@ -166,9 +168,9 @@ release() {
             fi
 
             start $@
-
             break
         ;;
+
         finish|f)
             shift
 
@@ -178,14 +180,15 @@ release() {
             fi
 
             finish $@
-
             break
         ;;
+
         *)
             if [ -z "$command" ]; then
                 echo "error: the flow feature command does not been provided."
                 exit 1
             fi
+
             echo "Command '$command' not found"
             exit 1
         ;;
@@ -202,25 +205,27 @@ flow() {
             feature $@
             break
         ;;
+
         release|r)
             shift
             release $@
             break
         ;;
-        hotfix|h)
 
+        hotfix|h)
             break
         ;;
+
         *)
             if [ -z "$command" ]; then
                 echo "error: the flow command does not been provided."
                 exit 1
             fi
+
             echo "Command '$command' not found"
             exit 1
         ;;
     esac
-
 }
 
 flow $@
