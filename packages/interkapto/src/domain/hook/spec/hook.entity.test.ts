@@ -1,7 +1,4 @@
-import Hook from 'hook/hook.entity';
-import { IHookConfigDTO } from 'hook/interfaces/hook.types';
-
-import Config from '@domain/config/config.entity';
+import Hook from '@domain/hook/hook.entity';
 
 import HookName from '@value-objects/hook-name/hook-name.entity';
 import HookScript from '@value-objects/hook-script/hook-script.entity';
@@ -14,15 +11,15 @@ import NonStringHookScriptException from '@value-objects/hook-script/exceptions/
 import { GitHooks } from '@value-objects/hook-name/interfaces/hook-name.types';
 import { IStderr, IStdout } from '@value-objects/hook-script/interfaces/hook-script.types';
 
+import { IHookDTO } from '../interfaces/hook.types';
+
 describe('hook domain integration with value-objects flow tests', () => {
-    const config = new Config();
     const validScript =
         '#!/usr/bin/env sh\n' +
         'echo test\n';
 
     it('should create a hook', () => {
         const sut = Hook.create({
-            config,
             hookName: 'pre-commit',
             hookScript: validScript
         });
@@ -54,7 +51,6 @@ describe('hook domain integration with value-objects flow tests', () => {
 
     test('invalid hook-name tests', () => {
         const sutNonStringHookName = Hook.create({
-            config,
             hookName: undefined as GitHooks,
             hookScript: validScript
         });
@@ -64,7 +60,6 @@ describe('hook domain integration with value-objects flow tests', () => {
         expect(sutNonStringHookName.getValue()).toBeInstanceOf(NonStringHookNameException);
 
         const sutEmptyStringHookName = Hook.create({
-            config,
             hookName: '' as GitHooks,
             hookScript: validScript
         });
@@ -74,7 +69,6 @@ describe('hook domain integration with value-objects flow tests', () => {
         expect(sutEmptyStringHookName.getValue()).toBeInstanceOf(EmptyStringHookNameException);
 
         const sutInvalidHookName = Hook.create({
-            config,
             hookName: 'invalidHookName' as GitHooks,
             hookScript: validScript
         });
@@ -86,7 +80,6 @@ describe('hook domain integration with value-objects flow tests', () => {
 
     test('invalid hook-script tests and failed execution tests', () => {
         const sutNonStringHookScript = Hook.create({
-            config,
             hookName: 'pre-commit',
             hookScript: undefined as string
         });
@@ -95,8 +88,7 @@ describe('hook domain integration with value-objects flow tests', () => {
         expect(sutNonStringHookScript.isErr()).toBe(true);
         expect(sutNonStringHookScript.getValue()).toBeInstanceOf(NonStringHookScriptException);
 
-        const failureScript: IHookConfigDTO = {
-            config,
+        const failureScript: IHookDTO = {
             hookName: 'pre-commit',
             hookScript:
                 '#!/usr/bin/env sh\n' +
