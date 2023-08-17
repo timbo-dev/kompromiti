@@ -5,19 +5,29 @@ feature() {
 
     finish() {
         local target=$1
+        local mergeTarget=$2
+
+        if [ -z "$mergeTarget" ]; then
+            mergeTarget="develop"
+        fi
+
+        if ! git show-ref --verify --quiet "refs/heads/$mergeTarget"; then
+            echo "error: the provided branch '$mergeTarget' does not exist."
+            exit 1
+        fi
 
         if ! git show-ref --verify --quiet "refs/heads/feature/$target"; then
             echo "error: the provided branch 'feature/$target' does not exist."
             exit 1
         else
-            actualCommits=$(git log --no-merges --format=format:'%s' develop..feature/$target)
+            actualCommits=$(git log --no-merges --format=format:'%s' $mergeTarget..feature/$target)
 
             if [ -z "$actualCommits" ]; then
                 echo "error: you cannot finish an unmodified branch"
                 exit 1
             fi
 
-            git checkout develop
+            git checkout $mergeTarget
             git unikamerge feature/$target
             git branch -D feature/$target
         fi
@@ -34,7 +44,7 @@ feature() {
         if ! git show-ref --verify --quiet "refs/heads/feature/$target"; then
 
             if ! git show-ref --verify --quiet "refs/heads/$refs"; then
-                echo "error: the provided reference branch does not exist"
+                echo "error: the provided reference branch '$refs' does not exist"
                 exit 1
             fi
 
