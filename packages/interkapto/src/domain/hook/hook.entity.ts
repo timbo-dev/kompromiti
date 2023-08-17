@@ -4,6 +4,7 @@ import HookName from '@value-objects/hook-name/hook-name.entity';
 import HookScript from '@value-objects/hook-script/hook-script.entity';
 
 import { Either } from '@shared/either/either.type';
+
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
