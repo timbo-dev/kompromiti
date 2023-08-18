@@ -2,10 +2,12 @@ import cp from 'child_process';
 
 import { IExecuteSyncError } from '@domain/hook/interfaces/hook.types';
 
+import AbstractValueObject from '@shared/value-object/value-object.abstract';
+
 import { Either } from '@shared/either/either.type';
+
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
-import AbstractValueObject from '@shared/value-object/value-object.abstract';
 
 import NonStringHookScriptException from './exceptions/non-string-hook-script.exception';
 

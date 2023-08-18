@@ -51,6 +51,9 @@
                     "/@value-objects.+.types/",
                     "/^@value-object/",
 
+                    "/@shared.+.abstract/",
+                    "/@shared.+.type/",
+                    "/@shared.+exception/",
                     "/^@shared/",
                     "/exception/",
                     ["parent", "sibling", "index"]

@@ -29,6 +29,10 @@
         "node": ">=16"
     },
     "devDependencies": {
-        "@kompromiti/interkapto": "workspace:*"
+        "@kompromiti/interkapto": "workspace:*",
+        "@types/prompts": "^2.4.4"
+    },
+    "dependencies": {
+        "prompts": "^2.4.2"
     }
 }

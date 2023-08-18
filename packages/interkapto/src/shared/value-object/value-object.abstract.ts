@@ -1,6 +1,8 @@
 import { Either } from '@shared/either/either.type';
-import err from '@shared/either/err';
+
 import Exception from '@shared/exception/exception';
+
+import err from '@shared/either/err';
 
 export default abstract class AbstractValueObject {
     public static create(value: any): Either<any, any> {
