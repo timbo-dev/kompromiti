@@ -2,8 +2,6 @@ import AbstractValueObject from '@shared/value-object/value-object.abstract';
 
 import { Either } from '@shared/either/either.type';
 
-import Exception from '@shared/exception/exception';
-
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
