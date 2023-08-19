@@ -1,0 +1,16 @@
+import CommandDescription from '../command-description.entity';
+
+describe('command-description value object entity tests', () => {
+    const loremIpsum = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates magnam deserunt quos dolore esse dolorum ipsam ut, voluptas ipsa quibusdam.';
+
+    it('should create a command description object', () => {
+        const sut = CommandDescription.create(loremIpsum);
+
+        expect(sut.isOk()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(CommandDescription);
+
+        const sutCommandDescription = (sut.getValue() as CommandDescription);
+
+        expect(sutCommandDescription.getDescription()).toBe(loremIpsum);
+    });
+});
