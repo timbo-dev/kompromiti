@@ -1,3 +1,5 @@
+import NonStringCommandDescriptionException from '../exceptions/non-string-command-description.exception';
+
 import CommandDescription from '../command-description.entity';
 
 describe('command-description value object entity tests', () => {
@@ -12,5 +14,12 @@ describe('command-description value object entity tests', () => {
         const sutCommandDescription = (sut.getValue() as CommandDescription);
 
         expect(sutCommandDescription.getDescription()).toBe(loremIpsum);
+    });
+
+    it('should return an error when the provided description is a non-string value', () => {
+        const sut = CommandDescription.create(undefined as string);
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(NonStringCommandDescriptionException);
     });
 });

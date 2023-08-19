@@ -7,6 +7,8 @@ import Exception from '@shared/exception/exception';
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
+import NonStringCommandDescriptionException from './exceptions/non-string-command-description.exception';
+
 import { CommandDescriptionExceptions } from './interfaces/command-description.types';
 
 export default class CommandDescription extends AbstractValueObject {
@@ -32,7 +34,7 @@ export default class CommandDescription extends AbstractValueObject {
 
     public static validate(description: string): Either<CommandDescriptionExceptions, string> {
         if (typeof description !== 'string')
-            return err(new Exception('Description is a non-string type'));
+            return err(new NonStringCommandDescriptionException(description));
 
         if (description.length === 0)
             return err(new Exception('Description is empty'));
