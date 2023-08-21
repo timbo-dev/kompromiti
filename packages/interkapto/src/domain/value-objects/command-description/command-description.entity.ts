@@ -25,8 +25,12 @@ export default class CommandDescription extends AbstractValueObject {
     public static create(description: string): Either<CommandDescriptionExceptions, CommandDescription> {
         const validationResult = this.validate(description);
 
-        if (validationResult.isErr())
-            return err(validationResult.getValue());
+        if (validationResult.isErr()) {
+            if (validationResult.getValue() instanceof EmptyStringCommandDescriptionException)
+                return ok(new CommandDescription('-'));
+            else
+                return err(validationResult.getValue());
+        }
 
         return ok(new CommandDescription(description));
     }
