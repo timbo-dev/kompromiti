@@ -1,3 +1,4 @@
+import EmptyStringCommandDescriptionException from '../exceptions/empty-string-command-description.exception';
 import NonStringCommandDescriptionException from '../exceptions/non-string-command-description.exception';
 
 import CommandDescription from '../command-description.entity';
@@ -21,5 +22,12 @@ describe('command-description value object entity tests', () => {
 
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(NonStringCommandDescriptionException);
+    });
+
+    it('should return an empty string exception from validate method', () => {
+        const sut = CommandDescription.validate('');
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(EmptyStringCommandDescriptionException);
     });
 });
