@@ -30,4 +30,15 @@ describe('command-description value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(EmptyStringCommandDescriptionException);
     });
+
+    it('should create a command description with "-" default character', () => {
+        const sut = CommandDescription.create('');
+
+        expect(sut.isOk()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(CommandDescription);
+
+        const sutCommandDescription = (sut.getValue() as CommandDescription);
+
+        expect(sutCommandDescription.getDescription()).toBe('-');
+    });
 });
