@@ -5,6 +5,8 @@ import { Either } from '@shared/either/either.type';
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
+import NonStringCommandAliasException from './exceptions/non-string-command-alias.exception';
+
 import { CommandAliasExceptions } from './interfaces/command-alias.types';
 
 export default class CommandAlias extends AbstractValueObject {
@@ -29,6 +31,9 @@ export default class CommandAlias extends AbstractValueObject {
     }
 
     public static validate(alias: string): Either<CommandAliasExceptions, string> {
+        if (typeof alias !== 'string')
+            return err(new NonStringCommandAliasException(alias));
+
         return ok(alias);
     }
 }
