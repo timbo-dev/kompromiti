@@ -28,4 +28,11 @@ describe('command-alias value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(EmptyStringCommandAliasException);
     });
+
+    it('should not create a command alias if command alias contains whitespace characters', () => {
+        const sut = CommandAlias.create('a b');
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandAliasException);
+    });
 });
