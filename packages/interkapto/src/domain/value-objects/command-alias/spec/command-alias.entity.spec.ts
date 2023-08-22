@@ -1,3 +1,5 @@
+import CommandAlias from '../command-alias.entity';
+
 describe('command-alias value object entity tests', () => {
     it('should create a command alias', () => {
         const sut = CommandAlias.create('a');
