@@ -20,4 +20,11 @@ describe('command-alias value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(NonStringCommandAliasException);
     });
+
+    it('should not create a command alias with an empty string value', () => {
+        const sut = CommandAlias.create('');
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(EmptyStringCommandAliasException);
+    });
 });
