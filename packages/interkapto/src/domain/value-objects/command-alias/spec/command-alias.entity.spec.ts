@@ -1,3 +1,4 @@
+import EmptyStringCommandAliasException from '../exceptions/empty-string-command-alias.exception';
 import NonStringCommandAliasException from '../exceptions/non-string-command-alias.exception';
 
 import CommandAlias from '../command-alias.entity';
