@@ -7,6 +7,7 @@ import ok from '@shared/either/ok';
 
 import EmptyStringCommandAliasException from './exceptions/empty-string-command-alias.exception';
 import NonStringCommandAliasException from './exceptions/non-string-command-alias.exception';
+import WhitespaceCommandAliasException from './exceptions/whitespace-command-alias.exception';
 
 import { CommandAliasExceptions } from './interfaces/command-alias.types';
 
@@ -37,6 +38,9 @@ export default class CommandAlias extends AbstractValueObject {
 
         if (alias.length === 0)
             return err(new EmptyStringCommandAliasException());
+
+        if (/\s/g.test(alias))
+            return err(new WhitespaceCommandAliasException(alias));
 
         return ok(alias);
     }
