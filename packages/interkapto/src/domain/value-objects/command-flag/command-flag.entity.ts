@@ -2,13 +2,12 @@ import AbstractValueObject from '@shared/value-object/value-object.abstract';
 
 import { Either } from '@shared/either/either.type';
 
-import Exception from '@shared/exception/exception';
-
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
 import EmptyStringCommandFlagException from './exceptions/empty-string-command-flag.exception';
 import NonStringCommandFlagException from './exceptions/non-string-command-flag.exception';
+import NotParsableCommandFlagValueException from './exceptions/not-parseable-command-flag-value.exception';
 import WhitespaceCommandFlagException from './exceptions/whitespace-command-flag.exception';
 
 import { CommandFlagDTO, CommandFlagExceptions } from './interfaces/command-flag.types';
@@ -54,7 +53,7 @@ export default class CommandFlag<T> extends AbstractValueObject {
             try {
                 return ok(JSON.parse(`"${flagValue}"`));
             } catch(e) {
-                return err(new Exception('Failed to parse flag value.'));
+                return err(new NotParsableCommandFlagValueException(flagValue));
             }
         }
     }
