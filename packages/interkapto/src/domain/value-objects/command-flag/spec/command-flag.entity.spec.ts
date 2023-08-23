@@ -29,4 +29,13 @@ describe('command-flag value object entity tests', () => {
         expect(sutCommandFlag.getFlagName()).toBe('force');
         expect(sutCommandFlag.getFlagValue()).toBe(null);
     });
+
+    it('should return an exception if the provided flag name is a non string value', () => {
+        const sut = CommandFlag.create({
+            flagName: undefined as string
+        });
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(NonStringCommandFlagException);
+    });
 });
