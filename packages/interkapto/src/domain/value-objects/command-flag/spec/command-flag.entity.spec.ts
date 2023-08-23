@@ -40,4 +40,13 @@ describe('command-flag value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(NonStringCommandFlagException);
     });
+
+    it('should not create a command flag with an empty string value', () => {
+        const sut = CommandFlag.create({
+            flagName: ''
+        });
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(EmptyStringCommandFlagException);
+    });
 });
