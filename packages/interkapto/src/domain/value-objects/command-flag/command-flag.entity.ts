@@ -7,6 +7,8 @@ import Exception from '@shared/exception/exception';
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
+import NonStringCommandFlagException from './exceptions/non-string-command-flag.exception';
+
 import { CommandFlagDTO, CommandFlagExceptions } from './interfaces/command-flag.types';
 
 export default class CommandFlag<T> extends AbstractValueObject {
@@ -56,6 +58,9 @@ export default class CommandFlag<T> extends AbstractValueObject {
     }
 
     public static validate({ flagName, flagValue }: CommandFlagDTO): Either<CommandFlagExceptions, CommandFlagDTO> {
+        if (typeof flagName !== 'string')
+            return err(new NonStringCommandFlagException(flagName));
+
         return ok({
             flagName,
             flagValue

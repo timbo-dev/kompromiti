@@ -1,3 +1,5 @@
+import NonStringCommandFlagException from '../exceptions/non-string-command-flag.exception';
+
 import CommandFlag from '../command-flag.entity';
 
 describe('command-flag value object entity tests', () => {
