@@ -50,4 +50,13 @@ describe('command-flag value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(EmptyStringCommandFlagException);
     });
+
+    it('should not create a command flag if command flag contains whitespace characters', () => {
+        const sut = CommandFlag.create({
+            flagName: 'a b'
+        });
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandFlagException);
+    });
 });
