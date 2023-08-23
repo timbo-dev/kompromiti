@@ -1,6 +1,7 @@
 import EmptyStringCommandFlagException from '../exceptions/empty-string-command-flag.exception';
 import NonStringCommandFlagValueException from '../exceptions/non-string-command-flag-value.exception';
 import NonStringCommandFlagException from '../exceptions/non-string-command-flag.exception';
+import NotParsableCommandFlagValueException from '../exceptions/not-parseable-command-flag-value.exception';
 import WhitespaceCommandFlagException from '../exceptions/whitespace-command-flag.exception';
 
 import CommandFlag from '../command-flag.entity';
@@ -74,6 +75,16 @@ describe('command-flag value object entity tests', () => {
 
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandFlagException);
+    });
+
+    it('should return an exception if the flag value is unable to be parsed', () => {
+        const sut = CommandFlag.create({
+            flagName: 'force',
+            flagValue: '""unable to parse""'
+        });
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(NotParsableCommandFlagValueException);
     });
 
     it('should not create a command flag if the command flag value is not a string', () => {
