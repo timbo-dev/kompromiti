@@ -15,4 +15,18 @@ describe('command-flag value object entity tests', () => {
         expect(sutCommandFlag.getFlagName()).toBe('force');
         expect(sutCommandFlag.getFlagValue()).toBe(true);
     });
+
+    it('should contains a null flag value as default', () => {
+        const sut = CommandFlag.create({
+            flagName: 'force'
+        });
+
+        expect(sut.isOk()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(CommandFlag);
+
+        const sutCommandFlag = (sut.getValue() as CommandFlag<null>);
+
+        expect(sutCommandFlag.getFlagName()).toBe('force');
+        expect(sutCommandFlag.getFlagValue()).toBe(null);
+    });
 });
