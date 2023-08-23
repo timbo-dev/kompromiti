@@ -1,20 +1,18 @@
 import { Either } from '@shared/either/either.type';
 
-import Exception from '@shared/exception/exception';
-
 import err from '@shared/either/err';
 
 export default abstract class AbstractValueObject {
-    public static create(value: any): Either<any, any> {
-        return err(value);
+    public static create(...args: any[]): Either<any, any> {
+        return err({...args});
     }
 
-    public static isLegit<T>(value: T): boolean {
-        const validationResult = AbstractValueObject.validate(value);
+    public static isLegit(...args: any[]): boolean {
+        const validationResult = this.validate(...args);
         return validationResult.isOk();
     }
 
-    public static validate(value: any): Either<Exception, any> {
-        return err(value);
+    public static validate(...args: any[]): Either<any, any> {
+        return err({...args});
     }
 }
