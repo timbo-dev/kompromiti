@@ -60,4 +60,35 @@ describe('command-flag value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandFlagException);
     });
+
+    it('should parse a command flag value', () => {
+        const sutString = CommandFlag.parse('something');
+        const sutNumber = CommandFlag.parse('52');
+        const sutArray = CommandFlag.parse('["test", 15, true]');
+        const sutObject = CommandFlag.parse('{"hello": "world", "number": 52, "boolean": false}');
+        const sutBoolean = CommandFlag.parse('true');
+
+        expect(sutString.isOk()).toBe(true);
+        expect(sutString.getValue()).toBe('something');
+
+        expect(sutNumber.isOk()).toBe(true);
+        expect(sutNumber.getValue()).toBe(52);
+
+        expect(sutArray.isOk()).toBe(true);
+        expect(sutArray.getValue()).toStrictEqual([
+            'test',
+            15,
+            true
+        ]);
+
+        expect(sutObject.isOk()).toBe(true);
+        expect(sutObject.getValue()).toStrictEqual({
+            hello: 'world',
+            number: 52,
+            boolean: false
+        });
+
+        expect(sutBoolean.isOk()).toBe(true);
+        expect(sutBoolean.getValue()).toBe(true);
+    });
 });
