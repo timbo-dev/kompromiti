@@ -1,3 +1,4 @@
+import EmptyStringCommandFlagException from '../exceptions/empty-string-command-flag.exception';
 import NonStringCommandFlagException from '../exceptions/non-string-command-flag.exception';
 
 import CommandFlag from '../command-flag.entity';

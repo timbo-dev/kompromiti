@@ -7,6 +7,7 @@ import Exception from '@shared/exception/exception';
 import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
+import EmptyStringCommandFlagException from './exceptions/empty-string-command-flag.exception';
 import NonStringCommandFlagException from './exceptions/non-string-command-flag.exception';
 
 import { CommandFlagDTO, CommandFlagExceptions } from './interfaces/command-flag.types';
@@ -60,6 +61,9 @@ export default class CommandFlag<T> extends AbstractValueObject {
     public static validate({ flagName, flagValue }: CommandFlagDTO): Either<CommandFlagExceptions, CommandFlagDTO> {
         if (typeof flagName !== 'string')
             return err(new NonStringCommandFlagException(flagName));
+
+        if (flagName.length === 0)
+            return err(new EmptyStringCommandFlagException());
 
         return ok({
             flagName,
