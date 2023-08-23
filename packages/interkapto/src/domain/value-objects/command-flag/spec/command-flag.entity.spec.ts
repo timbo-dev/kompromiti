@@ -1,3 +1,5 @@
+import CommandFlag from '../command-flag.entity';
+
 describe('command-flag value object entity tests', () => {
     it('should create a command flag', () => {
         const sut = CommandFlag.create({
