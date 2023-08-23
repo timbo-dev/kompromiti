@@ -65,7 +65,7 @@ describe('command-flag value object entity tests', () => {
     it('should not create a command flag if the command flag value is not a string', () => {
         const sut = CommandFlag.create({
             flagName: 'force',
-            flagValue: undefined as string
+            flagValue: false as unknown as string
         });
 
         expect(sut.isErr()).toBe(true);
