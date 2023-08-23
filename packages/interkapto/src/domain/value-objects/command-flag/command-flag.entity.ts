@@ -6,6 +6,7 @@ import err from '@shared/either/err';
 import ok from '@shared/either/ok';
 
 import EmptyStringCommandFlagException from './exceptions/empty-string-command-flag.exception';
+import NonStringCommandFlagValueException from './exceptions/non-string-command-flag-value.exception';
 import NonStringCommandFlagException from './exceptions/non-string-command-flag.exception';
 import NotParsableCommandFlagValueException from './exceptions/not-parseable-command-flag-value.exception';
 import WhitespaceCommandFlagException from './exceptions/whitespace-command-flag.exception';
@@ -67,6 +68,9 @@ export default class CommandFlag<T> extends AbstractValueObject {
 
         if (/\s/g.test(flagName))
             return err(new WhitespaceCommandFlagException(flagName));
+
+        if (typeof flagValue !== 'string')
+            return err(new NonStringCommandFlagValueException(flagValue));
 
         return ok({
             flagName,

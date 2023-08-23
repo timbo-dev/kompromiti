@@ -1,4 +1,5 @@
 import EmptyStringCommandFlagException from '../exceptions/empty-string-command-flag.exception';
+import NonStringCommandFlagValueException from '../exceptions/non-string-command-flag-value.exception';
 import NonStringCommandFlagException from '../exceptions/non-string-command-flag.exception';
 import WhitespaceCommandFlagException from '../exceptions/whitespace-command-flag.exception';
 
