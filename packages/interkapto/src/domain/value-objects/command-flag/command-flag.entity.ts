@@ -9,6 +9,7 @@ import ok from '@shared/either/ok';
 
 import EmptyStringCommandFlagException from './exceptions/empty-string-command-flag.exception';
 import NonStringCommandFlagException from './exceptions/non-string-command-flag.exception';
+import WhitespaceCommandFlagException from './exceptions/whitespace-command-flag.exception';
 
 import { CommandFlagDTO, CommandFlagExceptions } from './interfaces/command-flag.types';
 
@@ -64,6 +65,9 @@ export default class CommandFlag<T> extends AbstractValueObject {
 
         if (flagName.length === 0)
             return err(new EmptyStringCommandFlagException());
+
+        if (/\s/g.test(flagName))
+            return err(new WhitespaceCommandFlagException(flagName));
 
         return ok({
             flagName,
