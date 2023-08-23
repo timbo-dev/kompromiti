@@ -4,6 +4,7 @@ import NonStringCommandFlagException from '../exceptions/non-string-command-flag
 import WhitespaceCommandFlagException from '../exceptions/whitespace-command-flag.exception';
 
 import CommandFlag from '../command-flag.entity';
+import { CommandFlagDTO } from '../interfaces/command-flag.types';
 
 describe('command-flag value object entity tests', () => {
     it('should create a command flag', () => {
@@ -19,6 +20,19 @@ describe('command-flag value object entity tests', () => {
 
         expect(sutCommandFlag.getFlagName()).toBe('force');
         expect(sutCommandFlag.getFlagValue()).toBe(true);
+    });
+
+    it('should validate a command flag', () => {
+        const sut = CommandFlag.validate({
+            flagName: 'force',
+            flagValue: 'null'
+        });
+
+        expect(sut.isOk()).toBe(true);
+        expect(sut.getValue()).toStrictEqual({
+            flagName: 'force',
+            flagValue: 'null'
+        } as CommandFlagDTO);
     });
 
     it('should contains a null flag value as default', () => {
