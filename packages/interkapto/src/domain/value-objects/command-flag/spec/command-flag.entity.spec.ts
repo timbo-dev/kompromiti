@@ -61,6 +61,16 @@ describe('command-flag value object entity tests', () => {
         expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandFlagException);
     });
 
+    it('should not create a command flag if the command flag value is not a string', () => {
+        const sut = CommandFlag.create({
+            flagName: 'force',
+            flagValue: undefined as string
+        });
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(NonStringCommandFlagValueException);
+    });
+
     it('should parse a command flag value', () => {
         const sutString = CommandFlag.parse('something');
         const sutNumber = CommandFlag.parse('52');
