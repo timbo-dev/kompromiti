@@ -11,13 +11,14 @@ describe('command-flag value object entity tests', () => {
     it('should create a command flag', () => {
         const sut = CommandFlag.create({
             flagName: 'force',
-            flagValue: 'true'
+            flagValue: 'true',
+            flagType: 'boolean'
         });
 
         expect(sut.isOk()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(CommandFlag);
 
-        const sutCommandFlag = (sut.getValue() as CommandFlag<boolean>);
+        const sutCommandFlag = (sut.getValue() as CommandFlag<'boolean'>);
 
         expect(sutCommandFlag.getFlagName()).toBe('force');
         expect(sutCommandFlag.getFlagValue()).toBe(true);
@@ -26,19 +27,22 @@ describe('command-flag value object entity tests', () => {
     it('should validate a command flag', () => {
         const sut = CommandFlag.validate({
             flagName: 'force',
-            flagValue: 'null'
+            flagValue: 'null',
+            flagType: 'null'
         });
 
         expect(sut.isOk()).toBe(true);
         expect(sut.getValue()).toStrictEqual({
             flagName: 'force',
-            flagValue: 'null'
-        } as CommandFlagDTO);
+            flagValue: 'null',
+            flagType: 'null'
+        } as ICommandFlagDTO<'null'>);
     });
 
     it('should contains a null flag value as default', () => {
         const sut = CommandFlag.create({
-            flagName: 'force'
+            flagName: 'force',
+            flagType: 'null'
         });
 
         expect(sut.isOk()).toBe(true);
@@ -52,7 +56,8 @@ describe('command-flag value object entity tests', () => {
 
     it('should return an exception if the provided flag name is a non string value', () => {
         const sut = CommandFlag.create({
-            flagName: undefined as string
+            flagName: undefined as string,
+            flagType: 'null'
         });
 
         expect(sut.isErr()).toBe(true);
@@ -61,7 +66,8 @@ describe('command-flag value object entity tests', () => {
 
     it('should not create a command flag with an empty string value', () => {
         const sut = CommandFlag.create({
-            flagName: ''
+            flagName: '',
+            flagType: 'null'
         });
 
         expect(sut.isErr()).toBe(true);
@@ -70,7 +76,8 @@ describe('command-flag value object entity tests', () => {
 
     it('should not create a command flag if command flag contains whitespace characters', () => {
         const sut = CommandFlag.create({
-            flagName: 'a b'
+            flagName: 'a b',
+            flagType: 'null'
         });
 
         expect(sut.isErr()).toBe(true);
@@ -80,7 +87,8 @@ describe('command-flag value object entity tests', () => {
     it('should return an exception if the flag value is unable to be parsed', () => {
         const sut = CommandFlag.create({
             flagName: 'force',
-            flagValue: '""unable to parse""'
+            flagValue: '""unable to parse""',
+            flagType: 'string'
         });
 
         expect(sut.isErr()).toBe(true);
@@ -90,7 +98,8 @@ describe('command-flag value object entity tests', () => {
     it('should not create a command flag if the command flag value is not a string', () => {
         const sut = CommandFlag.create({
             flagName: 'force',
-            flagValue: false as unknown as string
+            flagValue: false as unknown as string,
+            flagType: 'boolean'
         });
 
         expect(sut.isErr()).toBe(true);
