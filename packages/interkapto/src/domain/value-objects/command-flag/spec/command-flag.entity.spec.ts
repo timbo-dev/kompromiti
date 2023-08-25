@@ -136,4 +136,35 @@ describe('command-flag value object entity tests', () => {
         expect(sutBoolean.isOk()).toBe(true);
         expect(sutBoolean.getValue()).toBe(true);
     });
+
+    it('should verify if the flag DTO contains duplicated flags', () => {
+        const duplicatedFlags: ICommandFlagDTO<'boolean'>[] = [
+            {
+                flagName: 'force',
+                flagValue: 'true',
+                flagType: 'boolean'
+            },
+            {
+                flagName: 'force',
+                flagValue: 'false',
+                flagType: 'boolean'
+            }
+        ];
+
+        const validFlags: ICommandFlagDTO<'boolean'>[] = [
+            {
+                flagName: 'other',
+                flagValue: 'true',
+                flagType: 'boolean'
+            },
+            {
+                flagName: 'force',
+                flagValue: 'false',
+                flagType: 'boolean'
+            }
+        ];
+
+        expect(CommandFlag.isDuplicated(duplicatedFlags)).toBe(true);
+        expect(CommandFlag.isDuplicated(validFlags)).toBe(false);
+    });
 });
