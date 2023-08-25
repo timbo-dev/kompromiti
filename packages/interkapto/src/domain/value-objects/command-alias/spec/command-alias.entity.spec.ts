@@ -65,4 +65,13 @@ describe('command-alias value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(NonStringCommandAliasException);
     });
+
+    it('should return the first exception if multiple aliases are invalid', () => {
+        const commandAliases = ['whitespace invalid alias', undefined, 'valid'];
+
+        const sut = CommandAlias.createAliases(commandAliases);
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandAliasException);
+    });
 });
