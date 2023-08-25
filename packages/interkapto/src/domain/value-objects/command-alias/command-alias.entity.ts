@@ -2,7 +2,7 @@ import AbstractValueObject from '@shared/value-object/value-object.abstract';
 
 import { Either } from '@shared/either/either.type';
 
-import err from '@shared/either/err';
+import err, { EitherErr } from '@shared/either/err';
 import ok from '@shared/either/ok';
 
 import EmptyStringCommandAliasException from './exceptions/empty-string-command-alias.exception';
@@ -21,6 +21,35 @@ export default class CommandAlias extends AbstractValueObject {
 
     public getAlias(): string {
         return this.alias;
+    }
+
+    public static createAliases(aliases: string[]): Either<CommandAliasExceptions, CommandAlias[]> {
+        const unduplicatedAliases = [...new Set(aliases)];
+
+        const creationListResult: CommandAlias[] | EitherErr<CommandAliasExceptions> = unduplicatedAliases.reduce((resolvedAliasesList, alias) => {
+            if (resolvedAliasesList instanceof EitherErr) {
+                resolvedAliasesList = err(resolvedAliasesList.getValue());
+
+                return resolvedAliasesList;
+            }
+
+            const creationResult = this.create(alias);
+
+            if (creationResult.isErr()) {
+                resolvedAliasesList = err(creationResult.getValue());
+
+                return resolvedAliasesList;
+            }
+
+            resolvedAliasesList.push(creationResult.getValue());
+
+            return resolvedAliasesList;
+        }, [] as CommandAlias[] | EitherErr<CommandAliasExceptions>);
+
+        if (creationListResult instanceof EitherErr)
+            return err(creationListResult.getValue());
+
+        return ok(creationListResult);
     }
 
     public static create(alias: string): Either<CommandAliasExceptions, CommandAlias> {
