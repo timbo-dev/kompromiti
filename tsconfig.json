@@ -3,7 +3,7 @@
         "swc": true
     },
     "compilerOptions": {
-        "target": "ES5",
+        "target": "ES2015",
         "module": "CommonJS",
         "isolatedModules": true,
         "esModuleInterop": true,
