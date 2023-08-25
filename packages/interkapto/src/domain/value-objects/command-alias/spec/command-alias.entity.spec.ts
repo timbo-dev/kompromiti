@@ -56,4 +56,13 @@ describe('command-alias value object entity tests', () => {
 
         expect(expectCommandAliasStringArray).toStrictEqual(commandAliases);
     });
+
+    it('should return an exception if multiple aliases are created with one invalid alias', () => {
+        const commandAliases = ['force', 'f', 't', undefined];
+
+        const sut = CommandAlias.createAliases(commandAliases);
+
+        expect(sut.isErr()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(NonStringCommandAliasException);
+    });
 });
