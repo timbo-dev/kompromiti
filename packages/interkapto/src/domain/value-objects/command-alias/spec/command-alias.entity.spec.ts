@@ -36,4 +36,24 @@ describe('command-alias value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandAliasException);
     });
+
+    it('should create command aliases with string array', () => {
+        const commandAliases = ['force', 'f', 't', 'o'];
+
+        const sut = CommandAlias.createAliases(commandAliases);
+
+        expect(sut.isOk()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(Array);
+
+        const sutCommandAliasList = (sut.getValue() as CommandAlias[]);
+        const expectCommandAliasStringArray: string[] = [];
+
+        for(const sutCommandAlias of sutCommandAliasList) {
+            expect(sutCommandAlias).toBeInstanceOf(CommandAlias);
+
+            expectCommandAliasStringArray.push(sutCommandAlias.getAlias());
+        }
+
+        expect(expectCommandAliasStringArray).toStrictEqual(commandAliases);
+    });
 });
