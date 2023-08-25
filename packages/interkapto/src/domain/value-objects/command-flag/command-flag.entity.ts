@@ -52,6 +52,11 @@ export default class CommandFlag<T extends FlagTypes> extends AbstractValueObjec
         return this.flagValue;
     }
 
+    public static isDuplicated<T extends FlagTypes>(flags: ICommandFlagDTO<T>[]): boolean {
+        const flagValues = flags.map(flag => flag.flagName);
+        return flagValues.some((flagValue, flagIndex) => flagValues.indexOf(flagValue) !== flagIndex);
+    }
+
     public static create<T extends FlagTypes>({ flagName, flagValue = 'null', flagType }: ICommandFlagDTO<T>): Either<CommandFlagExceptions, CommandFlag<T>> {
         const validationResult = this.validate({
             flagName,
