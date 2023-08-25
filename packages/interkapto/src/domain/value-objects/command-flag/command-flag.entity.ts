@@ -2,7 +2,7 @@ import AbstractValueObject from '@shared/value-object/value-object.abstract';
 
 import { Either } from '@shared/either/either.type';
 
-import err from '@shared/either/err';
+import err, { EitherErr } from '@shared/either/err';
 import ok from '@shared/either/ok';
 
 import DuplicatedCommandFlagException from './exceptions/duplicated-command-flag.exception';
@@ -55,6 +55,36 @@ export default class CommandFlag<T extends FlagTypes> extends AbstractValueObjec
     public static isDuplicated<T extends FlagTypes>(flags: ICommandFlagDTO<T>[]): boolean {
         const flagValues = flags.map(flag => flag.flagName);
         return flagValues.some((flagValue, flagIndex) => flagValues.indexOf(flagValue) !== flagIndex);
+    }
+
+    public static createFlags<T extends FlagTypes>(flags: ICommandFlagDTO<T>[]): Either<CommandFlagExceptions | DuplicatedCommandFlagException, CommandFlag<T>[]> {
+        if (this.isDuplicated(flags))
+            return err(new DuplicatedCommandFlagException());
+
+        const creationListResult = flags.reduce((resolvedFlagsOrException, flag) => {
+            if (resolvedFlagsOrException instanceof EitherErr) {
+                resolvedFlagsOrException = err(resolvedFlagsOrException.getValue());
+
+                return resolvedFlagsOrException;
+            }
+
+            const creationResult = CommandFlag.create(flag);
+
+            if (creationResult.isErr()) {
+                resolvedFlagsOrException = err(creationResult.getValue());
+
+                return resolvedFlagsOrException;
+            }
+
+            resolvedFlagsOrException.push(creationResult.getValue());
+
+            return resolvedFlagsOrException;
+        }, [] as EitherErr<CommandFlagExceptions> | EitherErr<DuplicatedCommandFlagException> | CommandFlag<T>[]);
+
+        if (creationListResult instanceof EitherErr)
+            return err(creationListResult.getValue());
+
+        return ok(creationListResult);
     }
 
     public static create<T extends FlagTypes>({ flagName, flagValue = 'null', flagType }: ICommandFlagDTO<T>): Either<CommandFlagExceptions, CommandFlag<T>> {
