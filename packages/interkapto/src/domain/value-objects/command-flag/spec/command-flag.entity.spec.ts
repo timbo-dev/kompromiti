@@ -5,7 +5,7 @@ import NotParsableCommandFlagValueException from '../exceptions/not-parseable-co
 import WhitespaceCommandFlagException from '../exceptions/whitespace-command-flag.exception';
 
 import CommandFlag from '../command-flag.entity';
-import { CommandFlagDTO } from '../interfaces/command-flag.types';
+import { FlagTypes, ICommandFlagDTO } from '../interfaces/command-flag.types';
 
 describe('command-flag value object entity tests', () => {
     it('should create a command flag', () => {
@@ -166,5 +166,60 @@ describe('command-flag value object entity tests', () => {
 
         expect(CommandFlag.isDuplicated(duplicatedFlags)).toBe(true);
         expect(CommandFlag.isDuplicated(validFlags)).toBe(false);
+    });
+
+    it('should create multiple valid flags', () => {
+        const sut = CommandFlag.createFlags([
+            {
+                flagName: 'other',
+                flagValue: 'true',
+                flagType: 'boolean'
+            },
+            {
+                flagName: 'help',
+                flagValue: 'message!',
+                flagType: 'string'
+            },
+            {
+                flagName: 'force',
+                flagValue: 'false',
+                flagType: 'boolean'
+            }
+        ]);
+
+        expect(sut.isOk()).toBe(true);
+        expect(sut.getValue()).toBeInstanceOf(Array);
+
+        const sutCommandFlags = (sut.getValue() as CommandFlag<'boolean' | 'string'>[]);
+
+        const commandFlagsArrayNames: string[] = [];
+        const commandFlagsArrayValues: Array<string | boolean> = [];
+        const commandFlagsArrayTypes: FlagTypes[] = [];
+
+        for (const flag of sutCommandFlags) {
+            expect(flag).toBeInstanceOf(CommandFlag);
+
+            commandFlagsArrayNames.push(flag.getFlagName());
+            commandFlagsArrayValues.push(flag.getFlagValue());
+            commandFlagsArrayTypes.push(flag.getFlagType());
+        }
+
+        expect(commandFlagsArrayNames).toStrictEqual([
+            'other',
+            'help',
+            'force'
+        ]);
+
+        expect(commandFlagsArrayValues).toStrictEqual([
+            true,
+            'message!',
+            false
+        ]);
+
+        expect(commandFlagsArrayTypes).toStrictEqual([
+            'boolean',
+            'string',
+            'boolean'
+        ] as FlagTypes[]);
     });
 });
