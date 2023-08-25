@@ -74,4 +74,30 @@ describe('command-alias value object entity tests', () => {
         expect(sut.isErr()).toBe(true);
         expect(sut.getValue()).toBeInstanceOf(WhitespaceCommandAliasException);
     });
+
+    it('should create multiples aliases removing duplicated values', () => {
+        const commandAliases = ['same', 'same', 'same', 'diferent'];
+
+        const sut = CommandAlias.createAliases(commandAliases);
+
+        expect(sut.isOk()).toBe(true);
+        expect(sut.getValue()).instanceOf(Array);
+
+        const sutCommandAliases = (sut.getValue() as CommandAlias[]);
+
+        expect(sutCommandAliases.length).toBe(2);
+
+        const commandAliasesArrayValues: string[] = [];
+
+        for(const commandAlias of sutCommandAliases) {
+            expect(commandAlias).toBeInstanceOf(CommandAlias);
+
+            commandAliasesArrayValues.push(commandAlias.getAlias());
+        }
+
+        expect(commandAliasesArrayValues).toStrictEqual([
+            'same',
+            'diferent'
+        ]);
+    });
 });
