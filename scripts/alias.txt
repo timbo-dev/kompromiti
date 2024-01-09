@@ -1,0 +1,4 @@
+[alias]
+	unikamerge = "!./.git/merge.sh"
+	unikainit = "!./.git/init.sh"
+	unikaflow = "!./.git/flow.sh"
