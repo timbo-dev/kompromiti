@@ -6,6 +6,12 @@ To install dependencies:
 bun install
 ```
 
+To setup:
+
+```bash
+bun run setup
+```
+
 To run:
 
 ```bash
