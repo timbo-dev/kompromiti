@@ -1,4 +1,4 @@
 [alias]
-	unikamerge = "!./.git/merge.sh"
-	unikainit = "!./.git/init.sh"
-	unikaflow = "!./.git/flow.sh"
+	unikamerge = "!./scripts/merge.sh"
+	unikainit = "!./scripts/init.sh"
+	unikaflow = "!./scripts/flow.sh"
