@@ -1,70 +1,207 @@
 #!/bin/sh
 
+start() {
+    local name=$1
+    local target=$2
+
+    if ! git show-ref --verify --quiet "refs/heads/$name/$target"; then
+        git checkout -b $name/$target develop
+    else
+        echo "error: the provided $name branch already exist"
+        exit 1
+    fi
+}
+
+finish() {
+    local name=$1
+    local target=$2
+
+    if ! git show-ref --verify --quiet "refs/heads/$name/$target"; then
+        echo "error: the provided branch '$name/$target' does not exist."
+        exit 1
+    else
+        actualCommits=$(git log --no-merges --format=format:'%s' develop..$name/$target)
+        if [ -z "$actualCommits" ]; then
+            echo "error: you cannot finish an unmodified branch"
+            exit 1
+        fi
+        git checkout develop
+        git unikamerge $name/$target
+        git branch -D $name/$target
+    fi
+}
+
+needBranchName() {
+    local name=$1
+
+    if [ -z "$name" ]; then
+        echo "error: you need to provide a branch name"
+        exit 1
+    fi
+}
+
+commandNotProvided() {
+    local command=$1
+    local name=$2
+
+    if [ -z "$command" ]; then
+        echo "error: the flow $name command does not been provided."
+        exit 1
+    fi
+
+    echo "Command '$command' not found"
+
+    exit 1
+}
+
 feature() {
     local command=$1
 
-    finish() {
-        local target=$1
-
-        if ! git show-ref --verify --quiet "refs/heads/feature/$target"; then
-            echo "error: the provided branch 'feature/$target' does not exist."
-            exit 1
-        else
-            actualCommits=$(git log --no-merges --format=format:'%s' develop..feature/$target)
-
-            if [ -z "$actualCommits" ]; then
-                echo "error: you cannot finish an unmodified branch"
-                exit 1
-            fi
-
-            git checkout develop
-            git unikamerge feature/$target
-            git branch -D feature/$target
-        fi
-    }
-
-    start() {
-        local target=$1
-
-        if ! git show-ref --verify --quiet "refs/heads/feature/$target"; then
-            git checkout -b feature/$target develop
-        else
-            echo "error: the provided feature branch already exist"
-            exit 1
-        fi
-    }
     case "$command" in
         start|s)
             shift
 
-            if [ -z "$1" ]; then
-                echo "error: you need to provide a branch name"
-                exit 1
-            fi
-
-            start $@
+            needBranchName $1
+            start feature $@
             break
         ;;
         finish|f)
             shift
 
-            if [ -z "$1" ]; then
-                echo "error: you need to provide a branch name"
-                exit 1
-            fi
-
-            finish $@
+            needBranchName $1
+            finish feature $@
 
             break
         ;;
 
         *)
-            if [ -z "$command" ]; then
-                echo "error: the flow feature command does not been provided."
-                exit 1
-            fi
-            echo "Command '$command' not found"
-            exit 1
+            echo "error"
+        ;;
+    esac
+}
+
+chore() {
+    local command=$1
+
+    case "$command" in
+        start|s)
+            shift
+
+            needBranchName $1
+            start chore $@
+            break
+        ;;
+        finish|f)
+            shift
+
+            needBranchName $1
+            finish chore $@
+
+            break
+        ;;
+
+        *)
+            echo "error"
+        ;;
+    esac
+}
+bugfix() {
+    local command=$1
+
+    case "$command" in
+        start|s)
+            shift
+
+            needBranchName $1
+            start bugfix $@
+            break
+        ;;
+        finish|f)
+            shift
+
+            needBranchName $1
+            finish bugfix $@
+
+            break
+        ;;
+
+        *)
+            echo "error"
+        ;;
+    esac
+}
+hotfix() {
+    local command=$1
+
+    case "$command" in
+        start|s)
+            shift
+
+            needBranchName $1
+            start hotfix $@
+            break
+        ;;
+        finish|f)
+            shift
+
+            needBranchName $1
+            finish hotfix $@
+
+            break
+        ;;
+
+        *)
+            echo "error"
+        ;;
+    esac
+}
+refactor() {
+    local command=$1
+
+    case "$command" in
+        start|s)
+            shift
+
+            needBranchName $1
+            start refactor $@
+            break
+        ;;
+        finish|f)
+            shift
+
+            needBranchName $1
+            finish refactor $@
+
+            break
+        ;;
+
+        *)
+            echo "error"
+        ;;
+    esac
+}
+perf() {
+    local command=$1
+
+    case "$command" in
+        start|s)
+            shift
+
+            needBranchName $1
+            start perf $@
+            break
+        ;;
+        finish|f)
+            shift
+
+            needBranchName $1
+            finish perf $@
+
+            break
+        ;;
+
+        *)
+            echo "error"
         ;;
     esac
 }
@@ -189,6 +326,11 @@ flow() {
         feature|f)
             shift
             feature $@
+            break
+        ;;
+        chore|c)
+            shift
+            chore $@
             break
         ;;
         release|r)
