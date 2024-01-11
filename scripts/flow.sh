@@ -3,9 +3,19 @@
 start() {
     local name=$1
     local target=$2
+    local base="${3:-develop}"
+
+    if [ $base == '.' ]; then
+        base=$(git rev-parse --abbrev-ref HEAD)
+    fi
+
+    if ! git show-ref --verify --quiet "refs/heads/$base"; then
+        echo "error: the provided base $base branch not exists."
+        exit 1
+    fi
 
     if ! git show-ref --verify --quiet "refs/heads/$name/$target"; then
-        git checkout -b $name/$target develop
+        git checkout -b $name/$target $base
     else
         echo "error: the provided $name branch already exist"
         exit 1
