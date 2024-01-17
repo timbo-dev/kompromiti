@@ -18,7 +18,7 @@ apply_flow_alias() {
         return
     fi
 
-    echo -e "$flow_alias" >> "$git_config_path"
+    echo "$flow_alias" >> "$git_config_path"
     echo -e "${GREEN}Success: flow alias applied${RESET}"
 }
 
