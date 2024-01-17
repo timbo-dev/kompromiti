@@ -343,13 +343,19 @@ flow() {
             chore $@
             break
         ;;
+        bugfix|fix|fx)
+            shift
+            bugfix $@
+            break
+        ;;
         release|r)
             shift
             release $@
             break
         ;;
         hotfix|h)
-
+            shift
+            hotfix $@
             break
         ;;
         *)
