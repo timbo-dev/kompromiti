@@ -1,5 +1,5 @@
 [alias]
-    parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
+	parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//'"
 	unikamerge = "!./scripts/merge.sh"
 	unikainit = "!./scripts/init.sh"
 	unikaflow = "!./scripts/flow.sh"
