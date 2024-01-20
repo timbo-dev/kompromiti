@@ -115,6 +115,7 @@ chore() {
         ;;
     esac
 }
+
 bugfix() {
     local command=$1
 
@@ -140,6 +141,7 @@ bugfix() {
         ;;
     esac
 }
+
 hotfix() {
     local command=$1
 
@@ -165,6 +167,7 @@ hotfix() {
         ;;
     esac
 }
+
 refactor() {
     local command=$1
 
@@ -190,6 +193,7 @@ refactor() {
         ;;
     esac
 }
+
 perf() {
     local command=$1
 
@@ -215,6 +219,7 @@ perf() {
         ;;
     esac
 }
+
 release() {
     local command=$1
 
